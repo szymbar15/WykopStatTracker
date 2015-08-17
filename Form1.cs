@@ -51,12 +51,12 @@ namespace WykopStatTracker
                 }*/
                 XDocument xDoc = XDocument.Load(new XmlNodeReader(locationsResponse));
                 //XElement root = xDoc.Element("embed");
-                xDoc.Descendants("embed").Remove();
-                debugBoxasdf.Text = " ";
+                xDoc.Descendants("embed").Descendants("type").Remove();
+                debugBoxasdf.Text = "";
                 locationsResponse.Load(xDoc.CreateReader());
                 XmlNodeList vote_count = locationsResponse.GetElementsByTagName("vote_count");
                 XmlNodeList type = locationsResponse.GetElementsByTagName("type");
-                
+                //XmlNodeList daye = 
 
                     //debugBoxasdf.Text = "";
                     //debugBoxasdf.Text = locationsResponse.OuterXml;
@@ -65,8 +65,12 @@ namespace WykopStatTracker
                 {
                     if (type[i].InnerText == "entry")
                     {
-                        debugBoxasdf.Text += vote_count[i].InnerText + " ";
-                    } 
+                        debugBoxasdf.Text += "1 " + vote_count[i].InnerText + "\n";
+                    }
+                    else
+                    {
+                        debugBoxasdf.Text += "2 " + vote_count[i].InnerText + "\n";
+                    }
                 }
             }
             catch (Exception e)
