@@ -1,0 +1,9 @@
+c:\users\szymb\documents\visual studio 2013\Projects\WykopStatTracker\WykopStatTracker\bin\Debug\WykopStatTracker.exe.config
+c:\users\szymb\documents\visual studio 2013\Projects\WykopStatTracker\WykopStatTracker\obj\Debug\WykopStatTracker.csprojResolveAssemblyReference.cache
+c:\users\szymb\documents\visual studio 2013\Projects\WykopStatTracker\WykopStatTracker\obj\Debug\WykopStatTracker.Form1.resources
+c:\users\szymb\documents\visual studio 2013\Projects\WykopStatTracker\WykopStatTracker\obj\Debug\WykopStatTracker.Properties.Resources.resources
+c:\users\szymb\documents\visual studio 2013\Projects\WykopStatTracker\WykopStatTracker\obj\Debug\WykopStatTracker.csproj.GenerateResource.Cache
+c:\users\szymb\documents\visual studio 2013\Projects\WykopStatTracker\WykopStatTracker\bin\Debug\WykopStatTracker.exe
+c:\users\szymb\documents\visual studio 2013\Projects\WykopStatTracker\WykopStatTracker\bin\Debug\WykopStatTracker.pdb
+c:\users\szymb\documents\visual studio 2013\Projects\WykopStatTracker\WykopStatTracker\obj\Debug\WykopStatTracker.exe
+c:\users\szymb\documents\visual studio 2013\Projects\WykopStatTracker\WykopStatTracker\obj\Debug\WykopStatTracker.pdb
