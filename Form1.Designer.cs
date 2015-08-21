@@ -43,8 +43,10 @@
             // 
             // debugBoxasdf
             // 
+            this.debugBoxasdf.BackColor = System.Drawing.Color.White;
             this.debugBoxasdf.Location = new System.Drawing.Point(13, 74);
             this.debugBoxasdf.Name = "debugBoxasdf";
+            this.debugBoxasdf.ReadOnly = true;
             this.debugBoxasdf.Size = new System.Drawing.Size(522, 256);
             this.debugBoxasdf.TabIndex = 0;
             this.debugBoxasdf.Text = "";
