@@ -1,0 +1,8 @@
+C:\Users\szymb\Documents\Visual Studio 2013\Projects\WykopStatTracker\WykopStatTracker\bin\Release\WykopStatTracker.exe.config
+C:\Users\szymb\Documents\Visual Studio 2013\Projects\WykopStatTracker\WykopStatTracker\bin\Release\WykopStatTracker.exe
+C:\Users\szymb\Documents\Visual Studio 2013\Projects\WykopStatTracker\WykopStatTracker\bin\Release\WykopStatTracker.pdb
+C:\Users\szymb\Documents\Visual Studio 2013\Projects\WykopStatTracker\WykopStatTracker\obj\Release\WykopStatTracker.Form1.resources
+C:\Users\szymb\Documents\Visual Studio 2013\Projects\WykopStatTracker\WykopStatTracker\obj\Release\WykopStatTracker.Properties.Resources.resources
+C:\Users\szymb\Documents\Visual Studio 2013\Projects\WykopStatTracker\WykopStatTracker\obj\Release\WykopStatTracker.csproj.GenerateResource.Cache
+C:\Users\szymb\Documents\Visual Studio 2013\Projects\WykopStatTracker\WykopStatTracker\obj\Release\WykopStatTracker.exe
+C:\Users\szymb\Documents\Visual Studio 2013\Projects\WykopStatTracker\WykopStatTracker\obj\Release\WykopStatTracker.pdb
