@@ -79,6 +79,7 @@
             this.atencjaDzisTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.atencjaDzisTextBox.Location = new System.Drawing.Point(12, 356);
             this.atencjaDzisTextBox.Name = "atencjaDzisTextBox";
+            this.atencjaDzisTextBox.ReadOnly = true;
             this.atencjaDzisTextBox.Size = new System.Drawing.Size(106, 55);
             this.atencjaDzisTextBox.TabIndex = 3;
             this.atencjaDzisTextBox.TextChanged += new System.EventHandler(this.atencjaDzisTextBox_TextChanged);
@@ -101,6 +102,7 @@
             this.atencja7dniTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.atencja7dniTextBox.Location = new System.Drawing.Point(429, 356);
             this.atencja7dniTextBox.Name = "atencja7dniTextBox";
+            this.atencja7dniTextBox.ReadOnly = true;
             this.atencja7dniTextBox.Size = new System.Drawing.Size(106, 55);
             this.atencja7dniTextBox.TabIndex = 5;
             this.atencja7dniTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -128,6 +130,7 @@
             this.inWpisyToday.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.inWpisyToday.Location = new System.Drawing.Point(13, 415);
             this.inWpisyToday.Name = "inWpisyToday";
+            this.inWpisyToday.ReadOnly = true;
             this.inWpisyToday.Size = new System.Drawing.Size(100, 13);
             this.inWpisyToday.TabIndex = 8;
             // 
@@ -137,6 +140,7 @@
             this.inWpisy7Days.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.inWpisy7Days.Location = new System.Drawing.Point(435, 415);
             this.inWpisy7Days.Name = "inWpisy7Days";
+            this.inWpisy7Days.ReadOnly = true;
             this.inWpisy7Days.Size = new System.Drawing.Size(100, 13);
             this.inWpisy7Days.TabIndex = 9;
             this.inWpisy7Days.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
