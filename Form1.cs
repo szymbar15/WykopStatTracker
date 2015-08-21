@@ -15,17 +15,75 @@ namespace WykopStatTracker
         static string WykopAPIKey = "uwxrtN984S";
         static string WykopSecretKey = "yf4pWJibuG";
 
-        private void Welcome()
+        private void Welcome(string nick)
         {
             try
             {
-
+                debugBoxasdf.Text = "";
+                int atencjadzis = 0;
+                int atencjatydzien = 0;
+                DateTime last;
+                int i = 1;
+                int wpisydzis = 0;
+                int wpisytydzien = 0;
                 //Create the REST Services 'Find by Query' request
-                string locationsRequest = CreateRequest("profile", "entries", "joookub");
-                Console.Write(locationsRequest);
-                debugBoxasdf.AppendText(hash);
-                //Console.Write(md5);
-                XmlDocument locationsResponse = MakeRequest(locationsRequest);
+                do
+                {
+                    string locationsRequest = CreateRequest("profile", "entries", nick, i);
+                    Console.Write(locationsRequest);
+                    //debugBoxasdf.AppendText(hash);
+                    //Console.Write(md5);
+                    XmlDocument locationsResponse = MakeRequest(locationsRequest);
+                    XDocument xDoc = XDocument.Load(new XmlNodeReader(locationsResponse));
+                    //XElement root = xDoc.Element("embed");
+                    xDoc.Descendants("embed").Descendants("type").Remove();
+                    xDoc.Descendants("comments").Remove();
+                    xDoc.Descendants("voters").Remove();
+                    //debugBoxasdf.Text = "";
+                    locationsResponse.Load(xDoc.CreateReader());
+                    XmlNodeList vote_count = locationsResponse.GetElementsByTagName("vote_count");
+                    XmlNodeList type = locationsResponse.GetElementsByTagName("type");
+                    XmlNodeList date = locationsResponse.GetElementsByTagName("date");
+
+                    //debugBoxasdf.Text = "";
+                    //debugBoxasdf.Text = locationsResponse.OuterXml;
+
+                    for (int j = 0; j < vote_count.Count; j++)
+                    {
+                        if (type[j].InnerText == "entry")
+                        {
+                            debugBoxasdf.Text += "Ilość plusów: " + vote_count[j].InnerText + ", wrzucono: " + DateTime.Parse(date[j].InnerText).ToString() + "\n";
+                        }
+                    }
+
+                    for (int j = 0; j < vote_count.Count; j++)
+                    {
+                        if (DateTime.Parse(date[j].InnerText) >= DateTime.Today)
+                        {
+                            atencjadzis += Int32.Parse(vote_count[j].InnerText);
+                            wpisydzis += 1;
+                        }
+                    }
+
+
+                    for (int j = 0; j < vote_count.Count; j++)
+                    {
+                        if (DateTime.Parse(date[j].InnerText) >= DateTime.Today.AddDays(-6))
+                        {
+                            atencjatydzien += Int32.Parse(vote_count[j].InnerText);
+                            wpisytydzien += 1;
+                        }
+                    }
+                    i++;
+                    last = DateTime.Parse(date[vote_count.Count-1].InnerText);
+
+                } while (last > DateTime.Today.AddDays(-13));
+                atencjaDzisTextBox.Text = atencjadzis.ToString();
+                atencja7dniTextBox.Text = atencjatydzien.ToString();
+                inWpisyToday.Text = "w " + wpisydzis + " wpisach";
+                inWpisy7Days.Text = "w " + wpisytydzien + " wpisach";
+
+                
                 //XmlNode childNode = locationsResponse.SelectSingleNode("comments"); // apply your xpath here
                 //childNode.ParentNode.RemoveChild(childNode);
                 //ProcessResponse(locationsResponse);
@@ -49,29 +107,8 @@ namespace WykopStatTracker
                 {
                     prices.RemoveChild(prices.FirstChild);
                 }*/
-                XDocument xDoc = XDocument.Load(new XmlNodeReader(locationsResponse));
-                //XElement root = xDoc.Element("embed");
-                xDoc.Descendants("embed").Descendants("type").Remove();
-                debugBoxasdf.Text = "";
-                locationsResponse.Load(xDoc.CreateReader());
-                XmlNodeList vote_count = locationsResponse.GetElementsByTagName("vote_count");
-                XmlNodeList type = locationsResponse.GetElementsByTagName("type");
-                //XmlNodeList daye = 
 
-                    //debugBoxasdf.Text = "";
-                    //debugBoxasdf.Text = locationsResponse.OuterXml;
                 
-                for (int i = 0; i < vote_count.Count; i++)
-                {
-                    if (type[i].InnerText == "entry")
-                    {
-                        debugBoxasdf.Text += "1 " + vote_count[i].InnerText + "\n";
-                    }
-                    else
-                    {
-                        debugBoxasdf.Text += "2 " + vote_count[i].InnerText + "\n";
-                    }
-                }
             }
             catch (Exception e)
             {
@@ -80,16 +117,16 @@ namespace WykopStatTracker
             }
         }
         public static string hash;
-        public string CreateRequest(string type, string method, string parameters)
+        public string CreateRequest(string type, string method, string parameters, int page)
         {
             string UrlRequest = "http://a.wykop.pl/" +
                                  type + "/" + method + "/" + parameters +
-                                 "/appkey," + WykopAPIKey + ",format,xml";
+                                 "/appkey," + WykopAPIKey + ",page," + page + ",format,xml";
             string asdf;
             asdf = WykopSecretKey + UrlRequest;
-            debugBoxasdf.Text = asdf;
+            //debugBoxasdf.Text = asdf;
             hash = GetMD5Hash(MD5.Create(), asdf);
-            debugBoxasdf.Text += hash;
+            //debugBoxasdf.Text += hash;
             return (UrlRequest);
             
         }
@@ -141,7 +178,22 @@ namespace WykopStatTracker
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Welcome();
+            Welcome(nickBox.Text);
+        }
+
+        private void atencjaDzis_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void atencjaDzisTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
