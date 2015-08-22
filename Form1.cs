@@ -10,6 +10,8 @@ using System.Xml.Linq;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Threading;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WykopStatTracker
 {
@@ -146,6 +148,8 @@ namespace WykopStatTracker
                     //do
                     //{
                 int loopamount = 2;
+                List<int> vote_count_list = new List<int>();
+                List<DateTime> date_list = new List<DateTime>();
                 for (int i = 1; i < loopamount; i++)
                 {
                     locationsRequest = CreateRequest("profile", "entries", nickBox.Text, i);
@@ -167,11 +171,15 @@ namespace WykopStatTracker
                     //debugBoxasdf.Text = "";
                     //debugBoxasdf.Text = locationsResponse.OuterXml;
 
+
+
                     for (int j = 0; j < vote_count.Count; j++)
                     {
                         if (type[j].InnerText == "entry")
                         {
-                            text += "Ilość plusów: " + vote_count[j].InnerText + ", wrzucono: " + DateTime.Parse(date[j].InnerText).ToString() + "\n";
+                            //text += "Ilość plusów: " + vote_count[j].InnerText + ", wrzucono: " + DateTime.Parse(date[j].InnerText).ToString() + "\n";
+                            vote_count_list.Add(Int32.Parse(vote_count[j].InnerText));
+                            date_list.Add(DateTime.Parse(date[j].InnerText));
                         }
                     }
 
@@ -203,6 +211,19 @@ namespace WykopStatTracker
                     {
                         loopamount++;
                     }
+                    
+                    
+
+
+                }
+                int[] vote_count_array = vote_count_list.ToArray();
+                DateTime[] date_array = date_list.ToArray();
+                Array.Sort(vote_count_array, date_array);
+                Array.Reverse(vote_count_array);
+                Array.Reverse(date_array);
+                for (int j = 0; j < vote_count_array.Count(); j++)
+                {
+                    text += "Ilość plusów: " + vote_count_array[j].ToString() + ", wrzucono: " + (date_array[j]).ToString() + "\n";
                 }
                     //} while (last >= now);
                     
