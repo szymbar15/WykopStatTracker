@@ -92,29 +92,21 @@ namespace WykopStatTracker
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            //backgroundWorker1.RunWorkerCompleted += CrossThreadSafe;
+            control = false;
+            control2 = false;
+            button2.Text = "Sortuj po ilości plusów";
+            button3.Text = "Sortuj rosnąco";
+            button2.Visible = false;
+            button3.Visible = false;
             debugBoxasdf.Text = "";
+            text = "";
             atencjadzis = 0;
             atencjatydzien = 0;
-            i = 1;
             wpisydzis = 0;
             wpisytydzien = 0;
-            text = "";
             waitLabel.Text = "Poczekaj chwilkę...";
             backgroundWorker1.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
             backgroundWorker1.RunWorkerAsync();
-            
-            
-        }
-
-        public void print()
-        {
-            debugBoxasdf.Text = text;
-                        atencjaDzisTextBox.Text = atencjadzis.ToString();
-                        atencja7dniTextBox.Text = atencjatydzien.ToString();
-                        inWpisyToday.Text = "w " + wpisydzis + " wpisach";
-                        inWpisy7Days.Text = "w " + wpisytydzien + " wpisach";
-                        waitLabel.Text = "";
         }
 
         private void atencjaDzis_Click(object sender, EventArgs e)
@@ -139,48 +131,36 @@ namespace WykopStatTracker
         string locationsRequest;
         int compare;
         DateTime now;
+        int[] vote_count_array = new int[0];
+        DateTime[] date_array = new DateTime[0];
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             try
             {
                 
-                //Create the REST Services 'Find by Query' request
-                    //do
-                    //{
                 int loopamount = 2;
                 List<int> vote_count_list = new List<int>();
                 List<DateTime> date_list = new List<DateTime>();
+
                 for (int i = 1; i < loopamount; i++)
                 {
                     locationsRequest = CreateRequest("profile", "entries", nickBox.Text, i);
-                    Console.Write(locationsRequest);
-                    //debugBoxasdf.AppendText(hash);
-                    //Console.Write(md5);
                     locationsResponse = MakeRequest(locationsRequest);
+
                     xDoc = XDocument.Load(new XmlNodeReader(locationsResponse));
-                    //XElement root = xDoc.Element("embed");
                     xDoc.Descendants("embed").Descendants("type").Remove();
                     xDoc.Descendants("comments").Remove();
                     xDoc.Descendants("voters").Remove();
-                    //debugBoxasdf.Text = "";
+
                     locationsResponse.Load(xDoc.CreateReader());
+
                     vote_count = locationsResponse.GetElementsByTagName("vote_count");
-                    type = locationsResponse.GetElementsByTagName("type");
                     date = locationsResponse.GetElementsByTagName("date");
-
-                    //debugBoxasdf.Text = "";
-                    //debugBoxasdf.Text = locationsResponse.OuterXml;
-
-
 
                     for (int j = 0; j < vote_count.Count; j++)
                     {
-                        if (type[j].InnerText == "entry")
-                        {
-                            //text += "Ilość plusów: " + vote_count[j].InnerText + ", wrzucono: " + DateTime.Parse(date[j].InnerText).ToString() + "\n";
-                            vote_count_list.Add(Int32.Parse(vote_count[j].InnerText));
-                            date_list.Add(DateTime.Parse(date[j].InnerText));
-                        }
+                        vote_count_list.Add(Int32.Parse(vote_count[j].InnerText));
+                        date_list.Add(DateTime.Parse(date[j].InnerText));
                     }
 
                     for (int j = 0; j < vote_count.Count; j++)
@@ -192,7 +172,6 @@ namespace WykopStatTracker
                         }
                     }
 
-
                     for (int j = 0; j < vote_count.Count; j++)
                     {
                         if (DateTime.Parse(date[j].InnerText) >= DateTime.Now.AddDays(-7))
@@ -201,62 +180,14 @@ namespace WykopStatTracker
                             wpisytydzien += 1;
                         }
                     }
-                    last = DateTime.Parse(date[vote_count.Count - 1].InnerText);
-                    now = DateTime.Now.Date.AddDays(-7);
-                    Console.WriteLine(" " + last + " " + now);
 
-                    compare = DateTime.Compare(last, now);
-                    Console.WriteLine(compare);
-                    if (compare > 0)
+                    if (DateTime.Compare(DateTime.Parse(date[vote_count.Count - 1].InnerText), DateTime.Now.Date.AddDays(-7)) > 0)
                     {
                         loopamount++;
                     }
-                    
-                    
-
-
                 }
-                int[] vote_count_array = vote_count_list.ToArray();
-                DateTime[] date_array = date_list.ToArray();
-                Array.Sort(vote_count_array, date_array);
-                Array.Reverse(vote_count_array);
-                Array.Reverse(date_array);
-                for (int j = 0; j < vote_count_array.Count(); j++)
-                {
-                    text += "Ilość plusów: " + vote_count_array[j].ToString() + ", wrzucono: " + (date_array[j]).ToString() + "\n";
-                }
-                    //} while (last >= now);
-                    
-                    //print();*/
-                //});
-                //mytask.Start();
-
-
-                //XmlNode childNode = locationsResponse.SelectSingleNode("comments"); // apply your xpath here
-                //childNode.ParentNode.RemoveChild(childNode);
-                //ProcessResponse(locationsResponse);
-                //XmlNode root = locationsResponse.DocumentElement;
-
-                //Remove all attribute and child nodes.
-                //root.RemoveAll();
-                //XmlNode root = locationsResponse.DocumentElement;
-
-                //Remove the title element.
-                //root.RemoveChild(root.FirstChild);
-                /*XmlNodeList nodes = locationsResponse.SelectNodes("//voters");
-                for (int i = 0; i < nodes.Count; i++)
-                {
-                    locationsResponse.RemoveChild(nodes[i]);
-                }*/
-                /*XElement root = XElement.Load(locationsResponse);
-                root.Descendants("embed").Descendants().Remove();*/
-                /*XmlNodeList prices = locationsResponse.GetElementsByTagName("embed");
-                foreach (XmlNode price in prices)
-                {
-                    prices.RemoveChild(prices.FirstChild);
-                }*/
-
-
+                vote_count_array = vote_count_list.ToArray();
+                date_array = date_list.ToArray();
             }
             
             catch (Exception f)
@@ -266,11 +197,74 @@ namespace WykopStatTracker
             }
             
         }
+
         void backgroundWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             Invoke((MethodInvoker)(() => {
                 print();
+                button2.Visible = true;
+                button3.Visible = true;
             }));
+        }
+
+        public void print()
+        {
+            text = "";
+            debugBoxasdf.Text="";
+            for (int j = 0; j < vote_count_array.Count(); j++)
+            {
+                text += "Ilość plusów: " + vote_count_array[j].ToString();
+                if (date_array[j] > DateTime.Today)
+                {
+                    text += ", wrzucono dzisiaj o " + date_array[j].ToString("hh:mm:ss") + "\n";
+                }
+                else
+                {
+                    text += ", wrzucono: " + (date_array[j]).ToString() + "\n";
+                }
+            }
+            debugBoxasdf.Text = text;
+            atencjaDzisTextBox.Text = atencjadzis.ToString();
+            atencja7dniTextBox.Text = atencjatydzien.ToString();
+            inWpisyToday.Text = "w " + wpisydzis + " wpisach";
+            inWpisy7Days.Text = "w " + wpisytydzien + " wpisach";
+            waitLabel.Text = "";
+        }
+        bool control = false;
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (control == false)
+            {
+                control = true;
+                Array.Sort(vote_count_array, date_array);
+                button2.Text = "Sortuj chronologicznie";
+            }
+            else
+            {
+                control = false;
+                Array.Sort(date_array, vote_count_array);
+                button2.Text = "Sortuj po ilości plusów";
+            }
+            control2 = true;
+            button3.Text = "Sortuj malejąco";
+            print();
+        }
+        bool control2 = false;
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (control2 == false)
+            {
+                control2 = true;
+                button3.Text = "Sortuj malejąco";
+            }
+            else
+            {
+                control2 = false;
+                button3.Text = "Sortuj rosnąco";
+            }
+            Array.Reverse(vote_count_array);
+            Array.Reverse(date_array);
+            print();
         }
     }
 }
