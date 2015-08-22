@@ -39,6 +39,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.inWpisyToday = new System.Windows.Forms.TextBox();
             this.inWpisy7Days = new System.Windows.Forms.TextBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.waitLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // debugBoxasdf
@@ -147,11 +149,26 @@
             this.inWpisy7Days.TabIndex = 9;
             this.inWpisy7Days.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
+            // waitLabel
+            // 
+            this.waitLabel.AutoSize = true;
+            this.waitLabel.Location = new System.Drawing.Point(235, 58);
+            this.waitLabel.Name = "waitLabel";
+            this.waitLabel.Size = new System.Drawing.Size(0, 13);
+            this.waitLabel.TabIndex = 10;
+            this.waitLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(549, 440);
+            this.Controls.Add(this.waitLabel);
             this.Controls.Add(this.inWpisy7Days);
             this.Controls.Add(this.inWpisyToday);
             this.Controls.Add(this.label1);
@@ -163,6 +180,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.debugBoxasdf);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Atencjosprawdzacz";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -183,6 +201,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox inWpisyToday;
         private System.Windows.Forms.TextBox inWpisy7Days;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Label waitLabel;
 
     }
 }
